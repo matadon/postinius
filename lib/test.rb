@@ -10,7 +10,11 @@ message = Message.new do
     subject "Re: My wombat is all nobbly. [#33]"
     header 'X-Madwombat-Tracker-Ticket-Number', '33'
 
+    multipart
+
     text 'This is the message text.'
+
+    html 'And some <b>HTML</b>.'
 
 #    attach :file => "/Users/donw/tmp/dl/csstooltips.zip"
 #
@@ -23,7 +27,7 @@ puts "from: #{message.from}"
 puts "to: #{message.to}"
 puts "subject: #{message.subject}"
 puts
-puts message.body
+puts message.body.html
 #.text
 
 #message.files.each do |file|

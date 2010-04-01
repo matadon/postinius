@@ -27,13 +27,6 @@ module MadWombat
 	    end
 
 	    #
-	    # Add in a new body part.
-	    #
-	    def add(part)
-		@java.addBodyPart(part.to_java)
-	    end
-
-	    #
 	    # Multiparts can be nested, so this creates a new nested
 	    # MimeMultipart.  The most common use for this is specfiying
 	    # 'multipart/alternative' sections for alternate representaton of
@@ -51,11 +44,18 @@ module MadWombat
 	    end
 
 	    #
+	    # Add in a new body part.
+	    #
+	    def add(part)
+		@java.addBodyPart(part.to_java)
+	    end
+
+	    #
 	    # Add a new body part to this MimeMultipart
 	    #
 	    def add_body_part(params = {}, &block)
 		builder = BodyPartBuilder.new(params, &block)
-		@multipart.add(builder)
+		add(builder)
 		builder
 	    end
 
@@ -90,7 +90,8 @@ module MadWombat
 	    # Add an HTML body part.
 	    #
 	    def html(string, params = {}, &block)
-	        text(string, { :content_type => 'text/html' }, &block)
+		defaults = { :content_type => 'text/html' }
+	        text(string, defaults.merge(params), &block)
 	    end
 
 	    #

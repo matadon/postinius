@@ -71,7 +71,6 @@ module MadWombat
 		multipart.html(string, params, &block)
 	    end
 
-
 	    #
 	    # Returns true if this message has no content; we have to implement
 	    # this via exceptions because JavaMail provides no way to ask if a

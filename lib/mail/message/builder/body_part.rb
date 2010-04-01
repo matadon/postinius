@@ -13,7 +13,7 @@ module MadWombat
 	    #
 	    def initialize(params = {}, &block)
 		@part = BodyPart.new
-		@java = @java.to_java
+		@java = @part.to_java
 		params.each_pair { |k, v| self.send(k, v) }
 		execute(&block) if block_given?
 	    end
@@ -51,7 +51,8 @@ module MadWombat
 	    #
 	    def text(string, params = {})
 	        @java.setText(string)
-		params.each_pair { |k, v| self.send(k, v) }
+		defaults = { :content_type => 'text/plain' }
+		defaults.merge(params).each_pair { |k, v| self.send(k, v) }
 	    end
 
 	    #
@@ -68,7 +69,7 @@ module MadWombat
 	    # if raw data is supplied via data().
 	    #
 	    def content_type(type)
-		header('Content-Type', type)
+	        setHeader('Content-Type', type)
 	    end
 
 	    def filename(name)

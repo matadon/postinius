@@ -109,15 +109,10 @@ module MadWombat
 	    #
 	    # Return the selected headers.
 	    #
-	    def headers(*names)
-		names.flatten!
-
-		if(names.empty?)
-		    results = @message.getAllHeaders
-		else
-		    results = @message.getMatchingHeaders(names.to_java(:String))
-		end
-
+	    def headers(*list)
+		names = list.flatten!
+		results = @message.getAllHeaders if names.empty?
+		results ||= @message.getMatchingHeaders(names.to_java(:String))
 		results.map { |h| [ h.name, h.value ] }
 	    end
 
@@ -125,9 +120,8 @@ module MadWombat
 	    # Return just a single header.
 	    #
 	    def header(name)
-		result = headers(name)
-		result.empty? and return
-		result[0][1]
+		result = headers(name) or return
+		result.first[1]
 	    end
 
 	    #
@@ -135,11 +129,18 @@ module MadWombat
 	    # just a simple message), or as an array of Multiparts.
 	    #
 	    def body
-		if(@message.content.is_a?(javax.mail.Multipart))
+	        if(multipart?)
 		    Multipart.new(@message.content)
 		else
-		    @message.content.toString
+		    @message.content
 		end
+	    end
+
+	    #
+	    # Returns true if this is a multipart message.
+	    #
+	    def multipart?
+		@message.content.is_a?(javax.mail.Multipart)
 	    end
 
 	    #

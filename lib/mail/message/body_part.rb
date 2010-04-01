@@ -23,7 +23,7 @@ module MadWombat
 	    # encoding information.
 	    #
 	    def content_type
-	        ct = ContentType.new(getHeader('Content-Type').first)
+	        ct = ContentType.new(header('Content-Type'))
 		ct.getBaseType
 	    end
 
@@ -31,7 +31,7 @@ module MadWombat
 	    # Returns the character set we're encoded in.
 	    #
 	    def charset
-	        ct = ContentType.new(getHeader('Content-Type').first)
+	        ct = ContentType.new(header('Content-Type'))
 		ct.getParameter('charset')
 	    end
 
@@ -56,7 +56,8 @@ module MadWombat
 	    # Return just a single header.
 	    #
 	    def header(name)
-		headers(name).to_s
+		result = headers(name) or return
+		result.first[1]
 	    end
 
 	    #
