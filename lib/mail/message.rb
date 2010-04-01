@@ -131,14 +131,21 @@ module MadWombat
 
 	    #
 	    # Return the body of this message, either as text (if we're
-	    # just a simple message), or as an array of MimeParts.
+	    # just a simple message), or as an array of Multiparts.
 	    #
 	    def body
 		if(@message.content.is_a?(javax.mail.Multipart))
-		    MimePart.new(@message.content)
+		    Multipart.new(@message.content)
 		else
 		    @message.content.toString
 		end
+	    end
+
+	    #
+	    # Returns all the files attached to this message.
+	    #
+	    def files
+	        body.select { |p| p.disposition == 'attachment' }
 	    end
 
 	    #

@@ -4,6 +4,9 @@ module MadWombat
 	    include_class javax.mail.internet.MimeBodyPart
 	    include_class javax.mail.util.ByteArrayDataSource
 	    include_class javax.activation.DataHandler
+	    include_class javax.mail.internet.ContentType
+
+	    attr_reader :parent
 
 	    #
 	    # We really just act as a simple wrapper to MimeBodyPart;
@@ -11,9 +14,9 @@ module MadWombat
 	    # keys executed as methods, with the value providing the
 	    # arguments.
 	    #
-	    def initialize(params = {})
-	        @part = MimeBodyPart.new
-		params.each_pair { |k, v| self.send(k, v) }
+	    def initialize(part = nil, parent = nil)
+	        @part = (part or MimeBodyPart.new)
+		@parent = parent
 	    end
 
 	    #
@@ -46,7 +49,17 @@ module MadWombat
 	    end
 
 	    def content_type
-	        @part.getHeader('Content-Type')
+	        ct = ContentType.new(getHeader('Content-Type').first)
+		ct.getBaseType
+	    end
+
+	    def charset
+	        ct = ContentType.new(getHeader('Content-Type').first)
+		ct.getParameter('charset')
+	    end
+
+	    def filename
+	        @part.getFileName
 	    end
 
 	    #
@@ -54,6 +67,11 @@ module MadWombat
 	    #
 	    def header(key, val)
 		@part.addHeader(key, val)
+	    end
+
+	    def to_s
+	        return unless (content_type =~ /^text\//)
+	        @part.content
 	    end
 
 	    #
@@ -75,7 +93,6 @@ module MadWombat
 		    super
 		end
 	    end
-
 	end
     end
 end
