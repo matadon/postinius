@@ -36,8 +36,8 @@ module MadWombat
 	    #
 	    def each
 	        parts = body_parts.map { |p| 
-		    p.is_a?(BodyPart) ? p : p.body_parts }
-	        parts.each { |p| yield(p) }
+		    p.multipart? ? p.body_parts : p }
+		parts.flatten.compact.each { |p| yield(p) }
 	    end
 
 	    #
@@ -61,6 +61,16 @@ module MadWombat
 	    #
 	    def to_java
 	        @part
+	    end
+
+	    #
+	    # Returns true if this is a multipart message.  Which it is,
+	    # kind of obviously.  We use this to walk down the body part
+	    # tree, and search for all multiparts, including those
+	    # contained in other body parts.
+	    #
+	    def multipart?
+	        true
 	    end
 
 	    #

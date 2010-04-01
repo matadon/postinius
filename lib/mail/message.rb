@@ -121,6 +121,7 @@ module MadWombat
 	    #
 	    def header(name)
 		result = headers(name) or return
+		return if result.empty?
 		result.first[1]
 	    end
 

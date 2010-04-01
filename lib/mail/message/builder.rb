@@ -40,7 +40,10 @@ module MadWombat
 		@message.addHeader(key, val)
 	    end
 
-	    def multipart(subtype = nil, &block)
+	    #
+	    # If called with a block, set up a new nested multipart.
+	    #
+	    def multipart(subtype = nil, params = {}, &block)
 	        unless(@multipart)
 		    @multipart = MultipartBuilder.new(subtype)
 
@@ -51,7 +54,9 @@ module MadWombat
 		    @message.setContent(@multipart.to_java)
 		end
 
-		@multipart.execute(&block) if block_given?
+		# Build nested multiparts if we got a block.
+		@multipart.multipart(subtype, params, &block) if block_given?
+
 		@multipart
 	    end
 

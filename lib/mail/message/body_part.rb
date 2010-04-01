@@ -23,16 +23,16 @@ module MadWombat
 	    # encoding information.
 	    #
 	    def content_type
-	        ct = ContentType.new(header('Content-Type'))
-		ct.getBaseType
+		type = header('Content-Type') or return
+	        ContentType.new(type).getBaseType
 	    end
 
 	    #
 	    # Returns the character set we're encoded in.
 	    #
 	    def charset
-	        ct = ContentType.new(header('Content-Type'))
-		ct.getParameter('charset')
+		type = header('Content-Type') or return
+	        ContentType.new(type).getParameter('charset')
 	    end
 
 	    #
@@ -40,6 +40,21 @@ module MadWombat
 	    #
 	    def filename
 	        @part.getFileName
+	    end
+
+	    #
+	    # Returns true if this is a multipart message.
+	    #
+	    def multipart?
+		@part.content.is_a?(javax.mail.Multipart)
+	    end
+
+	    #
+	    # Returns the body parts of the multipart we contain.
+	    #
+	    def body_parts
+	        return unless multipart?
+		[ self, Multipart.new(@part.content).body_parts ]
 	    end
 
 	    #
@@ -56,7 +71,8 @@ module MadWombat
 	    # Return just a single header.
 	    #
 	    def header(name)
-		result = headers(name) or return
+		result = headers(name)
+		return if result.empty?
 		result.first[1]
 	    end
 
