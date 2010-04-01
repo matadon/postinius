@@ -12,7 +12,9 @@ module MadWombat
 	    # http://en.wikipedia.org/wiki/MIME#Multipart_subtypes
 	    #
 	    def initialize(subtype = nil, params = {}, &block)
-		@multipart = Multipart.new(subtype)
+		@multipart = Multipart.new
+		@java = @multipart.to_java
+		@java.setSubType(subtype) if subtype
 		params.each_pair { |k, v| self.send(k, v) }
 		execute(&block) if block_given?
 	    end
@@ -22,6 +24,13 @@ module MadWombat
 	    #
 	    def execute(&block)
 		instance_eval(&block)
+	    end
+
+	    #
+	    # Add in a new body part.
+	    #
+	    def add(part)
+		@java.addBodyPart(part.to_java)
 	    end
 
 	    #
@@ -35,16 +44,19 @@ module MadWombat
 	    #
 	    def multipart(subtype = nil, params = {}, &block)
 		child = self.class.new(subtype, params, &block)
-		wrapper = BodyPart.new(:content => child)
-		@multipart.add(wrapper)
+		wrapper = BodyPart.new
+		wrapper.to_java.setContent(child.to_java)
+		add(wrapper)
+		child
 	    end
 
 	    #
 	    # Add a new body part to this MimeMultipart
 	    #
-	    def body_part(params = {}, &block)
+	    def add_body_part(params = {}, &block)
 		builder = BodyPartBuilder.new(params, &block)
-		@multipart.add(builder.result)
+		@multipart.add(builder)
+		builder
 	    end
 
 	    #
@@ -63,34 +75,36 @@ module MadWombat
 	    #
 	    def attach(params = {})
 		defaults = { :content_type => 'application/octet-stream' }
-	        body_part(defaults.merge(params))
+	        add_body_part(defaults.merge(params))
 	    end
 
 	    #
 	    # Shortcut to add a plaintext body part.
 	    #
-	    def text(string, params = {})
-	        body_part(params) do
-		    content_type('text/plain')
-		    text(string)
-		end
+	    def text(string, params = {}, &block)
+		defaults = { :text => string }
+	        add_body_part(defaults.merge(params), &block)
 	    end
 
 	    #
 	    # Add an HTML body part.
 	    #
-	    def html(data, params = {})
-	        body_part(params) do
-		    content_type('text/html')
-		    data(data)
-		end
+	    def html(string, params = {}, &block)
+	        text(string, { :content_type => 'text/html' }, &block)
+	    end
+
+	    #
+	    # Returns the Java object backing this Builder
+	    #
+	    def to_java
+	        @java
 	    end
 
 	    #
 	    # Returns the Multipart produced by this builder.
 	    #
 	    def result
-	        @multipart
+	        @part
 	    end
 
 	    #
@@ -100,8 +114,8 @@ module MadWombat
 	    # :nodoc:
 	    #
 	    def method_missing(name, *args, &block)
-		if(@multipart.respond_to?(name))
-		    @multipart.send(name, *args, &block)
+		if(@java.respond_to?(name))
+		    @java.send(name, *args, &block)
 		else
 		    super
 		end

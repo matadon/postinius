@@ -51,7 +51,7 @@ module MadWombat
 	    # If passed a block, will invoke that block in the context of
 	    # a MailBuilder.
 	    #
-	    def initialize(data, &block)
+	    def initialize(data = nil, &block)
 		# Set us up to work with JavaMail's MimeMessage.
 		session = Session.getInstance(System.getProperties(), nil)
 		@message = MimeMessage.new(session)
@@ -60,7 +60,8 @@ module MadWombat
 		# Parse our input data.
 		# FIXME: Do files directly via InputStream.
 		if(data)
-		    @message.parse(ByteArrayInputStream.new(data.to_java_bytes))
+		    bytes = data.to_java_bytes
+		    @message.parse(ByteArrayInputStream.new(bytes))
 		end
 
 		# Execute the builder if we got one.

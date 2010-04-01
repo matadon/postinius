@@ -18,13 +18,6 @@ module MadWombat
 	    end
 
 	    #
-	    # Sets our subtype.
-	    #
-	    def subtype=(subtype)
-		@part.setSubType(subtype)
-	    end
-
-	    #
 	    # Return an array of all the body parts we contain.
 	    #
 	    def body_parts
@@ -61,13 +54,6 @@ module MadWombat
 	    #
 	    def html
 	        find { |b| b.content_type == 'text/html' }
-	    end
-
-	    #
-	    # Add in a new body part.
-	    #
-	    def add(part)
-		@part.addBodyPart(part.to_java)
 	    end
 
 	    #

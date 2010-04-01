@@ -7,8 +7,13 @@ module MadWombat
 	    include_class javax.mail.Message
 	    include_class javax.mail.internet.InternetAddress
 
-	    def initialize(message)
+	    def initialize(message, &block)
 		@message = message
+		execute(&block) if block_given?
+	    end
+
+	    def execute(&block)
+	        instance_eval(&block)
 	    end
 
 	    def subject(subject)
@@ -36,25 +41,36 @@ module MadWombat
 	    end
 
 	    def multipart(subtype = nil, &block)
-	        @multipart ||= MultipartBuilder.new(@message, subtype)
-		@multipart.execute(&block)
-#		@builder.text(@message.getContent) unless empty?
-#		@message.setContent(@builder.result)
-#		@builder.execute(&block)
+	        unless(@multipart)
+		    @multipart = MultipartBuilder.new(subtype)
+
+		    # Add our existing content in as the first body part
+		    @multipart.text(@message.getContent) unless empty?
+
+		    # Replace our content with the shiny new Multipart.
+		    @message.setContent(@multipart.to_java)
+		end
+
+		@multipart.execute(&block) if block_given?
+		@multipart
 	    end
 
-	    def attach(params)
-#		multipart.e attach(params) }
+	    def attach(params, &block)
+		multipart.attach(params, &block)
 	    end
 
-	    # FIXME
-	    def body(text)
-#		if(@multipart)
-#		    @multipart.execute { body(text) }
-#		elsif(empty?)
-#		    @message.setText(text)
-#		end
+	    def text(string, params = {}, &block)
+		if(empty?)
+		    @message.setText(string)
+		else
+		    multipart.text(string, params, &block)
+		end
 	    end
+
+	    def html(string, params = {}, &block)
+		multipart.html(string, params, &block)
+	    end
+
 
 	    #
 	    # Returns true if this message has no content; we have to implement
