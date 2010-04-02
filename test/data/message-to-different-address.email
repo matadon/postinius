@@ -1,0 +1,57 @@
+From don.werve@gmail.com  Fri Sep 11 04:35:11 2009
+Return-Path: <don.werve@gmail.com>
+X-Original-To: support@darwin.madwombat.com
+Delivered-To: submit@localhost
+Received: from mail-px0-f221.google.com (mail-px0-f221.google.com [209.85.216.221])
+	by mail.madwombat.com (Postfix) with ESMTP id A0A4B149F9
+	for <support@darwin.madwombat.com>; Fri, 11 Sep 2009 04:35:11 +0000 (UTC)
+Received: by pxi18 with SMTP id 18sf1963240pxi.15
+        for <support@darwin.madwombat.com>; Thu, 10 Sep 2009 21:35:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:x-google-expanded:received:received
+         :received:received:received-spf:received:mime-version:received:date
+         :message-id:subject:from:to:precedence:mailing-list:list-id
+         :content-type;
+        bh=0Dca/lLsCbxcCF754PBsUNMyjpCytk/egBI9pa29tEI=;
+        b=btpOXTCxZ2TBQLwRA1jop5rmpDb9Lh2FTyUZMLVyeHIBGXHrRGLc8MnHI6Ook/g0Lv
+         EkXGq8C8UXTm70enMEhL8wnlWyltJYEjGDLCUeyouWviecGWv4ddxT4sXB9BQNFBVnOs
+         qfby+yBh1U9/ABB7YvAPrDKrUDk3ZtKm07gcg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-google-expanded:received-spf:authentication-results:mime-version
+         :date:message-id:subject:from:to:precedence:mailing-list:list-id
+         :content-type;
+        b=I+xb4YX7NtCcfxOPPLjPXNM73sWj3L/3qyoNXfH6oEuqdVN8eNcKv5b35E89zNhkeg
+         Y1gY/jGN9UV+meuxQGpqQKHzd/Ode4DZp7HMhgob/oEQJp0lsFRAe5CtuEmvDSA4kOKy
+         drU8KYDuPW9IxKWN3/JjA2ojcxj4EfV5SPUQU=
+Received: by 10.141.14.20 with SMTP id r20mr1226461rvi.14.1252643711438;
+        Thu, 10 Sep 2009 21:35:11 -0700 (PDT)
+X-Google-Expanded: support@madwombat.com
+Received: by 10.141.91.6 with SMTP id t6ls15846rvl.0.p; Thu, 10 Sep 2009 
+	21:35:11 -0700 (PDT)
+Received: by 10.115.66.28 with SMTP id t28mr4456115wak.177.1252643710949;
+        Thu, 10 Sep 2009 21:35:10 -0700 (PDT)
+Received: by 10.115.66.28 with SMTP id t28mr4456112wak.177.1252643710917;
+        Thu, 10 Sep 2009 21:35:10 -0700 (PDT)
+Received: from mail-px0-f195.google.com (mail-px0-f195.google.com [209.85.216.195])
+        by mx.google.com with ESMTP id 34si105444pxi.85.2009.09.10.21.35.09;
+        Thu, 10 Sep 2009 21:35:09 -0700 (PDT)
+Received-SPF: pass (google.com: domain of don.werve@gmail.com designates 209.85.216.195 as permitted sender) client-ip=209.85.216.195;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of don.werve@gmail.com designates 209.85.216.195 as permitted sender) smtp.mail=don.werve@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by pxi33 with SMTP id 33so635065pxi.11
+        for <support@madwombat.com>; Thu, 10 Sep 2009 21:35:09 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.140.141.20 with SMTP id o20mr652747rvd.18.1252643709627; Thu, 
+	10 Sep 2009 21:35:09 -0700 (PDT)
+Date: Thu, 10 Sep 2009 21:35:09 -0700
+Message-ID: <de2dc0990909102135j33dd1475je2b04689594ec221@mail.gmail.com>
+Subject: Testing again.
+From: Don W <don.werve@gmail.com>
+To: support@madwombat.com
+Precedence: list
+Mailing-list: list support@madwombat.com; contact support+owners@madwombat.com
+List-ID: <support.madwombat.com>
+Content-Type: text/plain; charset=ISO-8859-1
+
+This time, after I fix virtial-aliases. :)

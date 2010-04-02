@@ -1,0 +1,9 @@
+Manifest
+Rakefile
+lib/java/mail.jar
+lib/mail/message.rb
+lib/mail/message/body_part.rb
+lib/mail/message/builder.rb
+lib/mail/message/builder/body_part.rb
+lib/mail/message/builder/multipart.rb
+lib/mail/message/multipart.rb

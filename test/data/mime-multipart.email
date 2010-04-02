@@ -1,0 +1,31 @@
+From donw@madwombat.com  Fri Sep 11 04:19:56 2009
+Return-Path: <donw@madwombat.com>
+X-Original-To: submit@test.madwombat.com
+Delivered-To: submit@localhost
+Received: from mail-px0-f202.google.com (mail-px0-f202.google.com [209.85.216.202])
+	by mail.madwombat.com (Postfix) with ESMTP id 22D3A149F9
+	for <submit@test.madwombat.com>; Fri, 11 Sep 2009 04:19:56 +0000 (UTC)
+Received: by pxi40 with SMTP id 40so600912pxi.5
+        for <submit@test.madwombat.com>; Thu, 10 Sep 2009 21:19:55 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.143.27.2 with SMTP id e2mr241016wfj.202.1252642795738; Thu, 10 
+	Sep 2009 21:19:55 -0700 (PDT)
+Reply-To: don.werve@madwombat.com
+Date: Thu, 10 Sep 2009 21:19:55 -0700
+Message-ID: <8c029f970909102119k2bf0fc06h365a9301045702e8@mail.gmail.com>
+Subject: Testing mail flow.
+From: Don Werve <donw@madwombat.com>
+To: submit@test.madwombat.com
+Content-Type: multipart/alternative; boundary=00504502c5caded89f047345a028
+
+--00504502c5caded89f047345a028
+Content-Type: text/plain; charset=ISO-8859-1
+
+We'll use this for a test-injection into the app.
+
+--00504502c5caded89f047345a028
+Content-Type: text/html; charset=ISO-8859-1
+
+We&#39;ll use this for a test-injection into the app.
+
+--00504502c5caded89f047345a028--

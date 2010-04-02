@@ -1,0 +1,36 @@
+From donw@dalek.agentsix.net  Sat Oct  3 04:30:09 2009
+Return-Path: <donw@dalek.agentsix.net>
+X-Original-To: support@darwin.madwombat.com
+Delivered-To: submit@localhost
+Received: from mail-px0-f221.google.com (mail-px0-f221.google.com [209.85.216.221])
+	by mail.madwombat.com (Postfix) with ESMTP id E297D14085
+	for <support@darwin.madwombat.com>; Sat,  3 Oct 2009 04:30:09 +0000 (UTC)
+Received: by pxi18 with SMTP id 18sf783027pxi.15
+        for <support@darwin.madwombat.com>; Fri, 02 Oct 2009 21:30:09 -0700 (PDT)
+Received: by 10.140.133.10 with SMTP id g10mr466648rvd.1.1254544209365;
+        Fri, 02 Oct 2009 21:30:09 -0700 (PDT)
+MIME-Version: 1.0
+X-BeenThere: support@madwombat.com
+Received: by 10.141.14.15 with SMTP id r15ls19746024rvi.1.p; Fri, 02 Oct 2009 
+	21:30:09 -0700 (PDT)
+Received: by 10.115.102.18 with SMTP id e18mr4723943wam.174.1254544208699;
+        Fri, 02 Oct 2009 21:30:08 -0700 (PDT)
+Received: by 10.115.102.18 with SMTP id e18mr4723942wam.174.1254544208670;
+        Fri, 02 Oct 2009 21:30:08 -0700 (PDT)
+Received: from dalek.iveleague.org (163.96-30-64.ftth.swbr.surewest.net [64.30.96.163])
+        by mx.google.com with ESMTP id 12si2065856pxi.76.2009.10.02.21.30.08;
+        Fri, 02 Oct 2009 21:30:08 -0700 (PDT)
+Received-SPF: neutral (google.com: 64.30.96.163 is neither permitted nor denied by best guess record for domain of donw@dalek.agentsix.net) client-ip=64.30.96.163;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 64.30.96.163 is neither permitted nor denied by best guess record for domain of donw@dalek.agentsix.net) smtp.mail=donw@dalek.agentsix.net
+Received: by dalek.iveleague.org (Postfix, from userid 1000)
+	id 772AB54A2C; Fri,  2 Oct 2009 21:30:07 -0700 (PDT)
+To: support@madwombat.com
+Subject: Basic Japanese Message.
+Message-Id: <20091003043007.772AB54A2C@dalek.iveleague.org>
+Date: Fri,  2 Oct 2009 21:30:07 -0700 (PDT)
+From: donw@dalek.agentsix.net
+Precedence: list
+Mailing-list: list support@madwombat.com; contact support+owners@madwombat.com
+List-ID: <support.madwombat.com>
+
+これはメールです。
