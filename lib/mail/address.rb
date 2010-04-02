@@ -43,7 +43,15 @@ module Mail
 	end
 
 	def eql?(other)
-	    other.address == self.address
+	    if(other.is_a?(String))
+		self.address == self.class.new(other).address
+	    else
+		self.address == other.address
+	    end
+	end
+
+	def ==(other)
+	    eql?(other)
 	end
     end
 end

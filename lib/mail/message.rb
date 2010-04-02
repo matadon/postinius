@@ -1,8 +1,8 @@
-require 'open3'
 require 'mail/address'
 require 'mail/message/multipart'
 require 'mail/message/body_part'
 require 'mail/message/builder'
+require 'mail/delivery'
 
 module Mail
     #
@@ -105,15 +105,11 @@ module Mail
 	end
 
 	#
-	# Deliver our message
+	# Send our message out into the wild black yonder.
 	#
-	def deliver(method = nil)
-	    # Where is sendmail?
-	    Open3.popen3('sendmail -t') do |stdin, stdout, stderr|
-		stdin.write(self.read)
-		stdin.close
-	    end
-	    raise("Delivery via sendmail failed.") unless $?.success?
+	def send!(method = nil)
+	    deliverator = Deliverator.new(method)
+	    deliverator.deliver(self)
 	end
 
 	#
