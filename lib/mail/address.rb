@@ -31,6 +31,7 @@ module Mail
 	end
 
 	def to_s
+	    return(address) unless name
 	    "#{name} <#{address}>"
 	end
 

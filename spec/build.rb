@@ -1,48 +1,90 @@
-#!/usr/bin/env ruby
-
+require 'mail'
 require 'mail/message'
+require 'digest/md5'
 
+# Set us up to use Unicode.
 require 'jcode'
-$KCODE='u'
+$KCODE = 'u'
 
-include MadWombat::Mail
+# Make referring to Mail objects easier.
+include Mail
 
-message = Message.new do
-    to "Don Werve <don.werve@gmail.com>"
-    from "MadWombat Support <support@madwombat.com>"
-    subject "Re: My wombat is all nobbly. [#33]"
-    header 'X-Madwombat-Tracker-Ticket-Number', '33'
+describe(Message, '#new') do
+    it 'builds a new simple message' do
+	message = Message.new do
+	    to "Don Werve <don.werve@gmail.com>"
+	    from "MadWombat Support <support@madwombat.com>"
+	    subject "Re: My wombat is all nobbly. [#33]"
+	    header 'X-Madwombat-Tracker-Ticket-Number', '33'
+	    text 'Seriously, totally nobbly.  I can\'t use him anymore.'
+	end
 
-    text 'This is the message text.'
-
-    html 'And some <b>HTML</b>.'
-
-    multipart('alternative') do
-        text 'Some basic text.'
-
-	text 'これも簡単なテクストです。', :charset => 'UTF-8'
+	message.to.count.should == 1
+	message.to.first.should == 'don.werve@gmail.com'
+	message.from.should == 'support@madwombat.com'
+	message.subject.should == "Re: My wombat is all nobbly. [#33]"
+	message.header('X-Madwombat-Tracker-Ticket-Number').should == "33"
+	message.body.should =~ /totally/
     end
 
-    attach :file => "/Users/donw/tmp/dl/csstooltips.zip"
+    it 'builds a message with alternative text or html' do
+	message = Message.new do
+	    to "Don Werve <don.werve@gmail.com>"
+	    from "MadWombat Support <support@madwombat.com>"
+	    subject "Re: My wombat is all nobbly. [#33]"
+	    header 'X-Madwombat-Tracker-Ticket-Number', '33'
+	    text 'Seriously, totally nobbly.'
+	    html 'Seriously, <b>insanely</b> nobbly.'
+	end
 
-    attach :data => File.read("/Users/donw/tmp/dl/jce_policy-6.zip"),
-	:content_type => 'application/zip',
-	:filename => 'custom-file-name.zip'
-end
+	message.body.count.should == 2
+	message.body.text.content.should =~ /totally/
+	message.body.html.content.should =~ /insanely/
+	message.body.html.content.should =~ /\<b\>/
+    end
 
-puts "from: #{message.from}"
-puts "to: #{message.to}"
-puts "subject: #{message.subject}"
-puts "parts: #{message.body.count}"
-puts
-puts message.body.text
+    it 'builds a message from another message' do
+        template = Message.new do
+	    subject "A test message."
+	    text "This is some text."
+	end
 
-#message.body.each do |p|
-#    puts "part:   #{p} #{p.content_type} #{p.charset}"
-#end
+	message = Message.new(template.read) do
+	    from 'support@madwombat.com'
+	    to 'don@madwombat.com'
+	end
 
-message.files.each do |file|
-    puts "attached: #{file.filename} (#{file.size})"
+	message.body.should == "This is some text."
+	message.subject.should == "A test message."
+	message.from.should == 'support@madwombat.com'
+	message.to.count.should == 1
+	message.to.first.should == 'don@madwombat.com'
+    end
 
-    File.open(file.filename, "w") { |f| f.write(file.read) }
+#    it 'builds a message with alternative english or japanese' do
+#	message = Message.new do
+#	    to "Don Werve <don.werve@gmail.com>"
+#	    from "MadWombat Support <support@madwombat.com>"
+#	    subject "Re: My wombat is all nobbly. [#33]"
+#	    header 'X-Madwombat-Tracker-Ticket-Number', '33'
+#	    text 'Seriously, totally nobbly.'
+#	    html 'Seriously, <b>totally</b> nobbly.'
+#
+#	    multipart('alternative') do
+#		text 'Some basic text.'
+#
+#		text 'これも簡単なテクストです。', :charset => 'UTF-8'
+#	    end
+#
+#	    attach :file => "/Users/donw/tmp/dl/csstooltips.zip"
+#
+#	    attach :data => File.read("/Users/donw/tmp/dl/jce_policy-6.zip"),
+#		:content_type => 'application/zip',
+#		:filename => 'custom-file-name.zip'
+#	end
+#
+#	Deliverator.mailbox.count.should == 1
+#	Deliverator.mailbox.pop.should == message.read
+#    end
+
 end

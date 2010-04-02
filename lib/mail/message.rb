@@ -116,7 +116,7 @@ module Mail
 	# Return the selected headers.
 	#
 	def headers(*list)
-	    names = list.flatten!
+	    names = list.flatten
 	    results = @message.getAllHeaders if names.empty?
 	    results ||= @message.getMatchingHeaders(names.to_java(:String))
 	    results.map { |h| [ h.name, h.value ] }

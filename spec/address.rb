@@ -25,12 +25,17 @@ describe(Address, '#new') do
     it "is eql? to an Address with the same address part" do
         one = Address.new('Don Werve <don@madwombat.com>')
         two = Address.new('ドン・ワービ <don@madwombat.com>')
-	one.should.eql?(two)
+        three = Address.new('Don Werve <notdon@madwombat.com>')
+	one.should == two
+	one.should_not == three
+	two.should_not == three
     end
 
     it "is eql? to a string that can be parsed as an address" do
         one = Address.new('Don Werve <don@madwombat.com>')
         two = 'ドン・ワービ <don@madwombat.com>'
-	one.should.eql?(two)
+	three = 'don@madwombat.com'
+	one.should == two
+	one.should == three
     end
 end
