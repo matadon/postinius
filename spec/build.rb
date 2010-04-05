@@ -62,6 +62,22 @@ describe(Message, '#new') do
     end
     
     it 'provides access to the builder' do
+        message = Message.new do
+	    subject "A test message."
+	    text "This is some text."
+	end
+
+	message.builder.evaluate do
+	    to 'Don Werve <don@madwombat.com>'
+	end
+
+	message.builder.evaluate(:from => 'root@madwombat.com')
+
+	message.body.should == "This is some text."
+	message.subject.should == "A test message."
+	message.from.should == 'root@madwombat.com'
+	message.to.count.should == 1
+	message.to.first.should == 'don@madwombat.com'
     end
 
 #    it 'builds a message with alternative english or japanese' do
