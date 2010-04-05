@@ -28,11 +28,7 @@ module Mail
     #    message_as_text = message.write
     #
     class Message
-	include_class java.lang.System
-	include_class java.io.ByteArrayInputStream
 	include_class java.io.ByteArrayOutputStream
-	include_class javax.mail.internet.MimeMessage
-	include_class javax.mail.Session
 	include_class javax.mail.Message
 
 	RECIPIENT_TYPES = { 
@@ -55,20 +51,10 @@ module Mail
 	# a MailBuilder.
 	#
 	def initialize(data = nil, &block)
-	    # Set us up to work with JavaMail's MimeMessage.
-	    session = Session.getInstance(System.getProperties(), nil)
-	    @message = MimeMessage.new(session)
-	    @builder = MessageBuilder.new(@message)
-
-	    # Parse our input data.
-	    # FIXME: Do files directly via InputStream.
-	    if(data)
-		bytes = data.to_java_bytes
-		@message.parse(ByteArrayInputStream.new(bytes))
-	    end
-
-	    # Execute the builder if we got one.
+	    @builder = MessageBuilder.new
+	    @builder.parse(data) if data
 	    @builder.evaluate(&block) if block_given?
+	    @message = @builder.to_java
 	end
 
 	attr_reader :builder

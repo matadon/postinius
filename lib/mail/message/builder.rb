@@ -3,11 +3,33 @@ require 'mail/message/builder/body_part'
 
 module Mail
     class MessageBuilder
+	include_class java.lang.System
+	include_class java.io.FileInputStream
+	include_class java.io.ByteArrayInputStream
+	include_class javax.mail.Session
 	include_class javax.mail.Message
+	include_class javax.mail.internet.MimeMessage
 
-	def initialize(message, params = {}, &block)
-	    @message = message
+	def initialize(message = nil, params = {}, &block)
+	    # Set us up to work with JavaMail's MimeMessage.
+	    if(message)
+		@message = message
+	    else
+		session = Session.getInstance(System.getProperties(), nil)
+		@message = MimeMessage.new(session)
+	    end
+
 	    evaluate(params, &block)
+	end
+
+	def parse(input)
+	    if(input.respond_to?(:to_path))
+	        stream = FileInputStream.new(input.to_path)
+	    else
+		stream = ByteArrayInputStream.new(input.to_java_bytes)
+	    end
+	    @message.parse(stream)
+	    stream.close
 	end
 
 	def evaluate(params = {}, &block)
@@ -89,6 +111,10 @@ module Mail
 		raise unless (exception.message =~ /No content/i)
 		return(true)
 	    end
+	end
+
+	def to_java
+	    @message
 	end
 
 	#
