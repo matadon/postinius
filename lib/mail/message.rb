@@ -105,7 +105,7 @@ module Mail
 	#
 	# Send our message out into the wild black yonder.
 	#
-	def send!(method = nil)
+	def deliver(method = nil)
 	    deliverator = Deliverator.new(method)
 	    deliverator.deliver(self)
 	end

@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Don Werve"]
-  s.date = %q{2010-04-02}
+  s.date = %q{2010-04-05}
   s.description = %q{Mail parser, builder, and delivererer.}
   s.email = %q{don@madwombat.com}
   s.files = ["Manifest", "Rakefile", "lib/java/mail.jar", "lib/mail.rb", "lib/mail/address.rb", "lib/mail/message.rb", "lib/mail/delivery.rb", "lib/mail/message/body_part.rb", "lib/mail/message/builder.rb", "lib/mail/message/builder/body_part.rb", "lib/mail/message/builder/multipart.rb", "lib/mail/message/multipart.rb", "spec/address.rb", "spec/build.rb", "spec/parse.rb", "spec/deliver.rb", "madwombat-mail.gemspec"]

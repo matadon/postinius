@@ -19,7 +19,7 @@ describe(Deliverator, '#new') do
 	    subject 'Pushing the Deliverator to his limits.'
 	    text 'Go ahead.  Order a pizza.'
 	end
-	message.send!
+	message.deliver
 
 	Deliverator.mailbox.count.should == 1
 	Deliverator.mailbox.pop.should == message.read
