@@ -5,13 +5,14 @@ module Mail
     class MessageBuilder
 	include_class javax.mail.Message
 
-	def initialize(message, &block)
+	def initialize(message, params = {}, &block)
 	    @message = message
-	    execute(&block) if block_given?
+	    evaluate(params, &block)
 	end
 
-	def execute(&block)
-	    instance_eval(&block)
+	def evaluate(params = {}, &block)
+	    params.each_pair { |k, v| send(k.to_sym, v) }
+	    instance_eval(&block) if block_given?
 	end
 
 	def subject(subject)

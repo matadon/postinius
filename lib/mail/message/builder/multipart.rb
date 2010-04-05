@@ -14,15 +14,12 @@ module Mail
 	    @multipart = Multipart.new
 	    @java = @multipart.to_java
 	    @java.setSubType(subtype) if subtype
-	    params.each_pair { |k, v| self.send(k, v) }
-	    execute(&block) if block_given?
+	    evaluate(params, &block)
 	end
 
-	#
-	# Execute an arbitrary block in our instance context.
-	#
-	def execute(&block)
-	    instance_eval(&block)
+	def evaluate(params = {}, &block)
+	    params.each_pair { |k, v| send(k.to_sym, v) }
+	    instance_eval(&block) if block_given?
 	end
 
 	#

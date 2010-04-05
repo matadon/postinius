@@ -13,15 +13,12 @@ module Mail
 	def initialize(params = {}, &block)
 	    @part = BodyPart.new
 	    @java = @part.to_java
-	    params.each_pair { |k, v| self.send(k, v) }
-	    execute(&block) if block_given?
+	    evaluate(params, &block)
 	end
 
-	#
-	# Execute an arbitrary block in our instance context.
-	#
-	def execute(&block)
-	    instance_eval(&block)
+	def evaluate(params = {}, &block)
+	    params.each_pair { |k, v| send(k.to_sym, v) }
+	    instance_eval(&block) if block_given?
 	end
 
 	#

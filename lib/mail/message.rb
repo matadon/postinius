@@ -68,12 +68,10 @@ module Mail
 	    end
 
 	    # Execute the builder if we got one.
-	    @builder.execute(&block) if block_given?
+	    @builder.evaluate(&block) if block_given?
 	end
 
-	def build(&block)
-	    @builder.execute(&block)
-	end
+	attr_reader :builder
 
 	def recipients(type = nil)
 	    if(type = RECIPIENT_TYPES[type])

@@ -60,6 +60,9 @@ describe(Message, '#new') do
 	message.to.count.should == 1
 	message.to.first.should == 'don@madwombat.com'
     end
+    
+    it 'provides access to the builder' do
+    end
 
 #    it 'builds a message with alternative english or japanese' do
 #	message = Message.new do
