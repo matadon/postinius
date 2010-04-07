@@ -88,6 +88,10 @@ module Postal
 	    Address.new(@message.getFrom[0])
 	end
 
+	def message_id
+	    @message.getMessageID
+	end
+
 	#
 	# Send our message out into the wild black yonder.
 	#
@@ -138,6 +142,7 @@ module Postal
 	# Returns all the files attached to this message.
 	#
 	def files
+	    return(Array.new) unless multipart?
 	    body.select { |p| p.disposition == 'attachment' }
 	end
 

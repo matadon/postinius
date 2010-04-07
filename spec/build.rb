@@ -1,5 +1,5 @@
-require 'mail'
-require 'mail/message'
+require 'postal'
+require 'postal/message'
 require 'digest/md5'
 
 # Set us up to use Unicode.
@@ -7,7 +7,7 @@ require 'jcode'
 $KCODE = 'u'
 
 # Make referring to Mail objects easier.
-include Mail
+include Postal
 
 describe(Message, '#new') do
     it 'builds a new simple message' do
@@ -79,7 +79,29 @@ describe(Message, '#new') do
 	message.to.count.should == 1
 	message.to.first.should == 'don@madwombat.com'
     end
+    
+    it 'lets me specify a message ID' do
+        message = Message.new do
+	    subject "A test message."
+	    text "This is some text."
+	    from "root@madwombat.com"
+	    message_id "123456789@mail.madwombat.com"
+	end
 
+	message.message_id.should == "<123456789@mail.madwombat.com>"
+    end
+ 
+    it 'generates a message ID' do
+        message = Message.new do
+	    subject "A test message."
+	    text "This is some text."
+	    from "root@madwombat.com"
+	end
+
+	message.message_id.should_not be_nil
+	message.message_id.should_not be_empty
+    end
+ 
 #    it 'builds a message with alternative english or japanese' do
 #	message = Message.new do
 #	    to "Don Werve <don.werve@gmail.com>"

@@ -19,6 +19,12 @@ module Postal
 		@message = MimeMessage.new(session)
 	    end
 
+	    # Set a default message ID.
+	    host = java.net.InetAddress.getLocalHost.getHostName
+	    uuid = java.util.UUID.randomUUID
+	    message_id("#{uuid}@#{host}")
+
+	    # Evaluate the block we got passed.
 	    evaluate(params, &block)
 	end
 
@@ -95,6 +101,11 @@ module Postal
 
 	def html(string, params = {}, &block)
 	    multipart.html(string, params, &block)
+	end
+
+	def message_id(id)
+	    @message.removeHeader('Message-ID')
+	    @message.setHeader('Message-ID', "<#{id}>")
 	end
 
 	#

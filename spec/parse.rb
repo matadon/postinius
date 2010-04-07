@@ -1,5 +1,5 @@
-require 'mail'
-require 'mail/message'
+require 'postal'
+require 'postal/message'
 require 'digest/md5'
 
 # Set us up to use Unicode.
@@ -7,7 +7,7 @@ require 'jcode'
 $KCODE = 'u'
 
 # Make referring to Mail objects easier.
-include Mail
+include Postal
 
 # For each of the 'it_should_parse' methods below, we define an external
 # function that sets up an 'it' rspec, and then load
@@ -56,6 +56,7 @@ describe(Message, '#new') do
 	message.files.first.size.should == 4652
 	checksum = Digest::MD5.hexdigest(message.files.first.read)
 	checksum.should == '99dd853c5398cd3292b2d7c743f45b1e'
+	message.message_id.should =~ /\@mail\.gmail\.com\>$/
     end
 
     it_parses 'message to different address' do |message|

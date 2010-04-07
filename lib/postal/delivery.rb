@@ -2,50 +2,59 @@ require 'open3'
 
 module Postal
     class Deliverator
-        # For holding test deliveries.
-        @@mailbox = Array.new
-
 	def self.mailbox
-	    @@mailbox
+	    Thread.current[:mailbox] ||= Array.new
 	end
 
 	# We default to not really delivering.
-	@@delivery_method = :test
+	@@delivery_method = :batch
 
+	#
+	# Sets the default delivery method.  The first call will set the
+	# systemwide default, and the second will set it for the current
+	# thread only.
+	#
 	def self.delivery_method=(method)
-	    @@delivery_method = method
+	    @@delivery_method ||= method
+	    Thread.current[:delivery_method] = method
 	end
 
 	def self.delivery_method
-	    @@delivery_method
+	    Thread.current[:delivery_method] or @@delivery_method
 	end
 
         def initialize(method = nil)
 	    @method = (method or self.class.delivery_method)
 	end
 
-	def deliver(message)
-	    self.send(@method, message)
+	def deliver(*messages)
+	    messages.flatten.each do |message| 
+		string = (message.is_a?(String) ? message : message.read)
+		self.send(@method, string) 
+	    end
 	end
 
 	private
 
 	#
-	# A dummy delivery method for testing; messages can be accessed
-	# via an array in Deliverator.mailbox
+	# A batching delivery method that holds all messages sent in the
+	# current thread in a threadlocal.  This threadlocal can later
+	# be accessed through Deliverator.mailbox, and handed off for
+	# delivery through another method.
 	#
-	def test(message)
-	    Deliverator.mailbox << message.read
+	def batch(message)
+	    Thread.current[:mailbox] ||= Array.new
+	    Thread.current[:mailbox] << message
 	end
 
 	#
 	# Deliver a message via the local sendmail binary.
 	#
-	# FIXME: Allow the user to specify a sendmail delivery path.
+	# FIXME: Path to sendmail?
 	#
 	def sendmail(message)
 	    Open3.popen3('sendmail -t') do |stdin, stdout, stderr|
-		stdin.write(message.read)
+		stdin.write(message)
 		stdin.close
 	    end
 	    raise("Delivery via sendmail failed.") unless $?.success?

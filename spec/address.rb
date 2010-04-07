@@ -1,13 +1,13 @@
 # We're only testing Address functionality.
-require 'mail'
-require 'mail/address'
+require 'postal'
+require 'postal/address'
 
 # Set us up to use Unicode.
 require 'jcode'
 $KCODE = 'u'
 
 # Make referring to Mail objects easier.
-include Mail
+include Postal
 
 describe(Address, '#new') do
     it "parses a address" do
