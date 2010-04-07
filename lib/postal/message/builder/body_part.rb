@@ -10,8 +10,9 @@ module Postal
 	# is called (as an object instance method), and passed the 
 	# value as a single parameter.
 	#
-	def initialize(params = {}, &block)
-	    @part = BodyPart.new
+	def initialize(*args, &block)
+	    params = (args.last.is_a?(Hash) ? args.pop.dup : {})
+	    @part = BodyPart.new(args.first)
 	    @java = @part.to_java
 	    evaluate(params, &block)
 	end

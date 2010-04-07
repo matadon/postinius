@@ -13,6 +13,7 @@ module Postal
 	# arguments.
 	#
 	def initialize(part = nil, parent = nil)
+	    part.is_a?(self.class) and part = part.to_java
 	    @part = (part or MimeBodyPart.new)
 	    @parent = parent
 	end

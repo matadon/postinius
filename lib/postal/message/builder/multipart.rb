@@ -49,8 +49,8 @@ module Postal
 	#
 	# Add a new body part to this MimeMultipart
 	#
-	def add_body_part(params = {}, &block)
-	    builder = BodyPartBuilder.new(params, &block)
+	def add_body_part(*args, &block)
+	    builder = BodyPartBuilder.new(*args, &block)
 	    add(builder)
 	    builder
 	end

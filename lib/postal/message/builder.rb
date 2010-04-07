@@ -2,6 +2,20 @@ require 'postal/message/builder/multipart'
 require 'postal/message/builder/body_part'
 
 module Postal
+    class MimeMessageAlso < javax.mail.internet.MimeMessage
+        #
+	# Apparently, the shitheads that wrote JavaMail weren't
+	# satisfied with an amazingly complex and inconsistent API.
+	# They also wanted to randomly make you subclass and override
+	# methods because they couldn't be bothered to check to see if
+	# you already had a Message-ID header.
+	#
+	# Fucking morons.
+	#
+        def updateMessageID
+	end
+    end
+
     class MessageBuilder
 	include_class java.lang.System
 	include_class java.io.FileInputStream
@@ -16,7 +30,7 @@ module Postal
 		@message = message
 	    else
 		session = Session.getInstance(System.getProperties(), nil)
-		@message = MimeMessage.new(session)
+		@message = MimeMessageAlso.new(session)
 	    end
 
 	    # Set a default message ID.
@@ -100,6 +114,10 @@ module Postal
 	    multipart.attach(params, &block)
 	end
 
+	def add_body_part(*args, &block)
+	    multipart.add_body_part(*args, &block)
+	end
+
 	def text(string, params = {}, &block)
 	    if(empty?)
 		@message.setText(string)
@@ -114,7 +132,8 @@ module Postal
 
 	def message_id(id)
 	    @message.removeHeader('Message-ID')
-	    @message.setHeader('Message-ID', "<#{id}>")
+	    @message.setHeader('Message-ID', 
+		"<#{id.gsub(/[\<\>]/, '')}>")
 	end
 
 	#

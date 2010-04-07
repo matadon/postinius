@@ -88,7 +88,8 @@ describe(Message, '#new') do
 	    message_id "123456789@mail.madwombat.com"
 	end
 
-	message.message_id.should == "<123456789@mail.madwombat.com>"
+	parsed = Message.new(message.read)
+	parsed.message_id.should == "<123456789@mail.madwombat.com>"
     end
  
     it 'generates a message ID' do
@@ -97,9 +98,10 @@ describe(Message, '#new') do
 	    text "This is some text."
 	    from "root@madwombat.com"
 	end
+	parsed = Message.new(message.read)
 
-	message.message_id.should_not be_nil
-	message.message_id.should_not be_empty
+	parsed.message_id.should_not be_nil
+	parsed.message_id.should_not be_empty
     end
  
     it 'clears recipients' do
@@ -118,6 +120,26 @@ describe(Message, '#new') do
 	message.cc.should be_empty
 	message.bcc.should be_empty
     end 
+
+    it 'lets us reattach body parts' do
+	file = 'test/data/mime-multipart-with-attachments.email'
+        one = Message.read(file)
+
+	two = Message.new
+	one.files.each { |f| two.builder.add_body_part(f) }
+
+	two.message_id.should_not == one.message_id
+	two.files.count.should == one.files.count
+	match = two.files.all? do |file|
+	    checksum = Digest::MD5.hexdigest(file.read)
+	    one.files.any? do |other|
+		other.size == file.size \
+		and other.content_type == file.content_type \
+		and Digest::MD5.hexdigest(other.read) == checksum
+	    end
+	end
+	match.should be_true
+    end
 
 #    it 'builds a message with alternative english or japanese' do
 #	message = Message.new do
