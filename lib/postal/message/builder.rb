@@ -43,25 +43,34 @@ module Postal
 	    instance_eval(&block) if block_given?
 	end
 
+	def clear_recipients
+	    @message.setRecipients(Message::RecipientType::TO, "")
+	    @message.setRecipients(Message::RecipientType::CC, "")
+	    @message.setRecipients(Message::RecipientType::BCC, "")
+	end
+
 	def subject(subject)
 	    @message.setSubject(subject)
 	end
 
-	def from(address)
-	    @message.setFrom(Address.new(address).to_java)
-	end
+        def from(address)
+            @message.setFrom(Address.create_from(address).to_java)
+        end
 
-	def to(address)
-	    @message.addRecipients(Message::RecipientType::TO, address)
-	end
+        def to(address)
+            @message.addRecipients(Message::RecipientType::TO, 
+                Address.create_from(address).to_s)
+        end
 
-	def cc(address)
-	    @message.addRecipients(Message::RecipientType::CC, address)
-	end
+        def cc(address)
+            @message.addRecipients(Message::RecipientType::CC, 
+                Address.create_from(address).to_s)
+        end
 
-	def bcc(address)
-	    @message.addRecipients(Message::RecipientType::BCC, address)
-	end
+        def bcc(address)
+            @message.addRecipients(Message::RecipientType::BCC, 
+                Address.create_from(address).to_s)
+        end
 
 	def header(key, val)
 	    @message.addHeader(key, val)

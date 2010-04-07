@@ -65,6 +65,7 @@ module Postal
 	    else
 		recipients = getAllRecipients
 	    end
+	    return(Array.new) if recipients.nil?
 	    recipients.map { |r| Address.new(r) }
 	end
 

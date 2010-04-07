@@ -14,13 +14,23 @@ module Postal
 	# systemwide default, and the second will set it for the current
 	# thread only.
 	#
+	def self.default_delivery_method=(method)
+	    @@delivery_method = method
+	end
+
+	#
+	# Sets the default delivery method for this thread.
+	#
 	def self.delivery_method=(method)
-	    @@delivery_method ||= method
 	    Thread.current[:delivery_method] = method
 	end
 
+	def self.default_delivery_method
+	    @@delivery_method ||= nil
+	end
+
 	def self.delivery_method
-	    Thread.current[:delivery_method] or @@delivery_method
+	    Thread.current[:delivery_method] or default_delivery_method
 	end
 
         def initialize(method = nil)

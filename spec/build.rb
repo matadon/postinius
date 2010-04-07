@@ -102,6 +102,23 @@ describe(Message, '#new') do
 	message.message_id.should_not be_empty
     end
  
+    it 'clears recipients' do
+        message = Message.new do
+	    subject "A test message."
+	    text "This is some text."
+	    from "root@madwombat.com"
+	    to "don@madwombat.com"
+	    cc "dave@madwombat.com"
+	    clear_recipients
+	    to "flufferton@madwombat.com"
+	end
+
+	message.to.count.should == 1
+	message.to.first.should == "flufferton@madwombat.com"
+	message.cc.should be_empty
+	message.bcc.should be_empty
+    end 
+
 #    it 'builds a message with alternative english or japanese' do
 #	message = Message.new do
 #	    to "Don Werve <don.werve@gmail.com>"

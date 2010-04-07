@@ -2,6 +2,16 @@ module Postal
     class Address
 	include_class javax.mail.internet.InternetAddress
 
+	#
+	# Utility constructor; hands back the object if it's an address, 
+	# builds a new one if not.  Helps us avoid needless object
+	# churn.
+	#
+	def self.create_from(address)
+	    return(address) if address.is_a?(self)
+	    return(self.new(address))
+	end
+
 	def initialize(email = nil)
 	    if(email.nil?)
 		@address = InternetAddress.new
