@@ -61,8 +61,7 @@ describe(Message, '#new') do
 
     it_parses 'multipart mime with text body' do |message|
         message.body.count.should == 3
-	puts "text: #{message.body.text.class}"
-	message.body.text.should_not be_nil
-	message.body.text.should_not be_empty
+	message.body.text.should_not == nil
+	message.body.text.content.empty?.should_not == true
     end
 end

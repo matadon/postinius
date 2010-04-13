@@ -63,10 +63,11 @@ module Postal
 	# Return the selected headers.
 	#
 	def headers(*list)
-	    names = list.flatten
-	    results = @part.getAllHeaders.map { |h| [ h.name, h.value ] }
+	    names = list.flatten.map { |i| i.downcase }
+	    results = @part.getAllHeaders.map { |h| 
+		[ h.name.downcase, h.value ] }
 	    return(results) if names.empty?
-	    return(results.select { |h| list.include?(h.first) })
+	    return(results.select { |h| names.include?(h.first) })
 	end
 
 	#
