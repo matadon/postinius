@@ -1,8 +1,9 @@
+require 'postal/mime_type'
+
 module Postal
     class BodyPart
 	include_class javax.mail.internet.MimeBodyPart
 	include_class java.io.ByteArrayOutputStream
-	include_class javax.mail.internet.ContentType
 
 	attr_reader :parent
 
@@ -24,16 +25,17 @@ module Postal
 	#
 	def content_type
 	    type = header('Content-Type') or return
-	    ContentType.new(type).getBaseType
+	    MimeType.new(type)
 	end
 
 	#
-	# Returns the character set we're encoded in.
+	# Returns the character set this message is encoded in, if that
+	# information is supplied as part of the Content-Type header.
 	#
 	def charset
-	    type = header('Content-Type') or return
-	    ContentType.new(type).getParameter('charset')
+	    content_type.charset
 	end
+
 
 	#
 	# If this is an attachment, returns the file name.

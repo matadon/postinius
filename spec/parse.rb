@@ -59,21 +59,10 @@ describe(Message, '#new') do
 	message.message_id.should =~ /\@mail\.gmail\.com\>$/
     end
 
-    it_parses 'message to different address' do |message|
-    end
-
-    it_parses 'mime multipart with attachments' do |message|
-    end
-
-    it_parses 'mime multipart' do |message|
-    end
-
-    it_parses 'multipart mime message in japanese' do |message|
-    end
-
-    it_parses 'multipart mime message' do |message|
-    end
-
-    it_parses 'forwarded multipart mime message' do |message|
+    it_parses 'multipart mime with text body' do |message|
+        message.body.count.should == 3
+	puts "text: #{message.body.text.class}"
+	message.body.text.should_not be_nil
+	message.body.text.should_not be_empty
     end
 end

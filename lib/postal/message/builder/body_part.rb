@@ -1,8 +1,9 @@
+require 'postal/mime_type'
+
 module Postal
     class BodyPartBuilder
 	include_class javax.mail.util.ByteArrayDataSource
 	include_class javax.activation.DataHandler
-	include_class javax.mail.internet.ContentType
 
 	#
 	# Creates the builder, and executes the supplied block in the
@@ -55,10 +56,10 @@ module Postal
 	#
 	# Sets our character set.
 	#
-	def charset(name)
-	    type = ContentType.new(@part.header('Content-Type'))
-	    type.setParameter('charset', name)
-	    content_type(type.toString)
+	def charset(charset)
+	    type = MimeType.new(@part.header('Content-Type'))
+	    type.charset = charset
+	    content_type(type)
 	end
 
 	#
@@ -66,7 +67,7 @@ module Postal
 	# if raw data is supplied via data().
 	#
 	def content_type(type)
-	    setHeader('Content-Type', type)
+	    setHeader('Content-Type', MimeType.new(type).to_s)
 	end
 
 	def filename(name)

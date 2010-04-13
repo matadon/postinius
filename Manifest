@@ -3,6 +3,7 @@ Rakefile
 lib/java/mail.jar
 lib/postal.rb
 lib/postal/address.rb
+lib/postal/mime_type.rb.rb
 lib/postal/message.rb
 lib/postal/deliverator.rb
 lib/postal/message/body_part.rb
@@ -11,6 +12,7 @@ lib/postal/message/builder/body_part.rb
 lib/postal/message/builder/multipart.rb
 lib/postal/message/multipart.rb
 spec/address.rb
+spec/mime_type.rb.rb
 spec/build.rb
 spec/parse.rb
 spec/deliverator.rb
