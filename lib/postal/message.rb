@@ -2,7 +2,7 @@ require 'postal/address'
 require 'postal/message/multipart'
 require 'postal/message/body_part'
 require 'postal/message/builder'
-require 'postal/delivery'
+require 'postal/deliverator'
 
 module Postal
     #

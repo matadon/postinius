@@ -13,15 +13,21 @@ module Postal
 	end
 
 	def initialize(email = nil)
-	    if(email.nil?)
-		@address = InternetAddress.new
-	    elsif(email.is_a?(javax.mail.internet.InternetAddress))
+	    if(email.is_a?(javax.mail.internet.InternetAddress))
 	        @address = email
 	    elsif(email.is_a?(self.class))
 	        @address = email.to_java
+	    elsif(email.nil? or email.empty?)
+		@address = InternetAddress.new
 	    else
 		@address = InternetAddress.new(email) 
 	    end
+	end
+
+	def empty?
+	    self.address.nil? \
+		or self.address.empty? \
+		or (@address.toString == 'null')
 	end
 
 	def name

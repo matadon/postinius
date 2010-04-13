@@ -38,4 +38,15 @@ describe(Address, '#new') do
 	one.should == two
 	one.should == three
     end
+
+    it "lets you know about empty addresses" do
+        one = Address.new
+	one.should be_empty
+
+        two = Address.new(nil)
+	two.should be_empty
+
+        three = Address.new("")
+	three.should be_empty
+    end
 end
