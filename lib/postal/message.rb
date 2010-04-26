@@ -36,6 +36,9 @@ module Postal
 	    :cc => Message::RecipientType::CC,
 	    :bcc => Message::RecipientType::BCC }
 
+	#
+	# Read and parse a message from a file, handed over as a path.
+	#
 	def self.read(filename)
 	    new(File.read(filename))
 	end
@@ -130,6 +133,26 @@ module Postal
 	    else
 		@message.content
 	    end
+	end
+
+	#
+	# Returns the plaintext from the message body; if there is no
+	# plaintext body, returns nil.
+	#
+	def text
+	    if(multipart?)
+	        body.text
+	    else
+	        body
+	    end
+	end
+
+	#
+	# Returns the HTML message body.
+	#
+	def html
+	    return unless multipart?
+	    body.html
 	end
 
 	#

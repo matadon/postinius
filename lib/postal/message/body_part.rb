@@ -96,7 +96,7 @@ module Postal
 	# Returns a string representation of this BodyPart.
 	#
 	def to_s
-	    return unless (content_type =~ /^text\//)
+	    return unless (content_type.primary == 'text')
 	    @part.content
 	end
 

@@ -9,7 +9,7 @@ $KCODE = 'u'
 # Make referring to Mail objects easier.
 include Postal
 
-describe(Message, '#new') do
+describe('Builder') do
     it 'builds a new simple message' do
 	message = Message.new do
 	    to "Don Werve <don.werve@gmail.com>"
@@ -141,30 +141,57 @@ describe(Message, '#new') do
 	match.should be_true
     end
 
+    it 'attaches files to messages' do
+        filename = "test/data/csstooltips.zip"
+        message = Message.new do
+	    subject "A test message."
+	    from "root@madwombat.com"
+	    to "don@madwombat.com"
+	    text "This is some text."
+	    attach :file => filename
+	end
+
+	checksum = Digest::MD5.hexdigest(File.read(filename))
+	message.files.count.should == 1
+	file = message.files.shift
+	file.filename.should == 'csstooltips.zip'
+	Digest::MD5.hexdigest(file.read).should == checksum
+	file.content_type.should == 'application/octet-stream'
+	file.disposition.should == 'attachment'
+    end
+
+    it 'attaches files-as-data to messages' do
+        data = File.read("test/data/csstooltips.zip")
+
+        message = Message.new do
+	    subject "A test message."
+	    from "root@madwombat.com"
+	    to "don@madwombat.com"
+	    text "This is some text."
+	    attach :data => data, 
+		:filename => 'foo.zip',
+		:content_type => 'application/octet-stream'
+	end
+
+	checksum = Digest::MD5.hexdigest(data)
+	message.files.count.should == 1
+	file = message.files.shift
+	file.filename.should == 'foo.zip'
+	Digest::MD5.hexdigest(file.read).should == checksum
+	file.content_type.should == 'application/octet-stream'
+	file.disposition.should == 'attachment'
+    end
+
 #    it 'builds a message with alternative english or japanese' do
 #	message = Message.new do
 #	    to "Don Werve <don.werve@gmail.com>"
 #	    from "MadWombat Support <support@madwombat.com>"
 #	    subject "Re: My wombat is all nobbly. [#33]"
 #	    header 'X-Madwombat-Tracker-Ticket-Number', '33'
-#	    text 'Seriously, totally nobbly.'
-#	    html 'Seriously, <b>totally</b> nobbly.'
-#
 #	    multipart('alternative') do
 #		text 'Some basic text.'
-#
 #		text 'これも簡単なテクストです。', :charset => 'UTF-8'
 #	    end
-#
-#	    attach :file => "/Users/donw/tmp/dl/csstooltips.zip"
-#
-#	    attach :data => File.read("/Users/donw/tmp/dl/jce_policy-6.zip"),
-#		:content_type => 'application/zip',
-#		:filename => 'custom-file-name.zip'
 #	end
-#
-#	Deliverator.mailbox.count.should == 1
-#	Deliverator.mailbox.pop.should == message.read
 #    end
-
 end

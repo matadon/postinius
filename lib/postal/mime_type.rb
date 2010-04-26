@@ -40,6 +40,10 @@ module Postal
 	    @type.getBaseType
 	end
 
+	def primary
+	    @type.getPrimaryType
+	end
+
 	def subtype=(type)
 	    @type.setSubType(type)
 	end

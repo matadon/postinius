@@ -55,6 +55,7 @@ module Postal
 	def evaluate(params = {}, &block)
 	    params.each_pair { |k, v| send(k.to_sym, v) }
 	    instance_eval(&block) if block_given?
+	    @message.saveChanges
 	end
 
 	def clear_recipients

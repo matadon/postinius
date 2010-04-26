@@ -2,14 +2,14 @@
 
 Gem::Specification.new do |s|
   s.name = %q{postal}
-  s.version = "0.1.2"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Don Werve"]
-  s.date = %q{2010-04-13}
+  s.date = %q{2010-04-26}
   s.description = %q{Mail parser, builder, and delivererer.}
   s.email = %q{don@madwombat.com}
-  s.files = ["Manifest", "Rakefile", "lib/java/mail.jar", "lib/postal.rb", "lib/postal/address.rb", "lib/postal/message.rb", "lib/postal/deliverator.rb", "lib/postal/message/body_part.rb", "lib/postal/message/builder.rb", "lib/postal/message/builder/body_part.rb", "lib/postal/message/builder/multipart.rb", "lib/postal/message/multipart.rb", "spec/address.rb", "spec/build.rb", "spec/parse.rb", "spec/deliverator.rb", "postal.gemspec"]
+  s.files = ["Manifest", "Rakefile", "lib/java/mail.jar", "lib/postal.rb", "lib/postal/address.rb", "lib/postal/mime_type.rb", "lib/postal/message.rb", "lib/postal/deliverator.rb", "lib/postal/message/body_part.rb", "lib/postal/message/builder.rb", "lib/postal/message/builder/body_part.rb", "lib/postal/message/builder/multipart.rb", "lib/postal/message/multipart.rb", "spec/address.rb", "spec/mime_type.rb", "spec/build.rb", "spec/parse.rb", "spec/deliverator.rb", "postal.gemspec"]
   s.homepage = %q{https://sydney/git/?p=postal.git}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Postal"]
   s.require_paths = ["lib"]

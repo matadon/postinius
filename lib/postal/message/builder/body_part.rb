@@ -67,7 +67,7 @@ module Postal
 	# if raw data is supplied via data().
 	#
 	def content_type(type)
-	    setHeader('Content-Type', MimeType.new(type).to_s)
+	    @java.setHeader('Content-Type', MimeType.new(type).to_s)
 	end
 
 	def filename(name)

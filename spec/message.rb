@@ -20,4 +20,18 @@ describe('Message') do
 	message.header('X-Test-Header').should == "66"
 	message.header('x-test-header').should == "66"
     end
+
+    it "returns the body for a multipart message" do
+        message = Message.new do
+	    subject "A test message."
+	    from "root@madwombat.com"
+	    to "don@madwombat.com"
+
+	    text "This is some text."
+	    html "This is some <i>HTML</i>."
+	end
+
+	message.text.to_s.should =~ /text/
+	message.html.to_s.should =~ /HTML/
+    end
 end
