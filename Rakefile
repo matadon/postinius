@@ -1,7 +1,7 @@
 require 'rake'
 require 'echoe'
 
-Echoe.new('postal', '0.1.4') do |p|
+Echoe.new('postinius', '0.1.4') do |p|
     p.description = "Mail parser, builder, and delivererer."
     p.summary = "A Javamail-backed mail handler for JRuby."
     p.url = "https://sydney/git/?p=postal.git"
