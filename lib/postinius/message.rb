@@ -1,10 +1,10 @@
-require 'postal/address'
-require 'postal/message/multipart'
-require 'postal/message/body_part'
-require 'postal/message/builder'
-require 'postal/deliverator'
+require 'postinius/address'
+require 'postinius/message/multipart'
+require 'postinius/message/body_part'
+require 'postinius/message/builder'
+require 'postinius/deliverator'
 
-module Postal
+module Postinius
     #
     # Builds an email message using JavaMail.
     #

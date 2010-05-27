@@ -1,4 +1,4 @@
-module Postal
+module Postinius
     class Multipart
 	include Enumerable
 	include_class javax.mail.internet.MimeMultipart

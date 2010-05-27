@@ -1,13 +1,13 @@
 # We're only testing Address functionality.
-require 'postal'
-require 'postal/address'
+require 'postinius'
+require 'postinius/address'
 
 # Set us up to use Unicode.
 require 'jcode'
 $KCODE = 'u'
 
 # Make referring to Mail objects easier.
-include Postal
+include Postinius
 
 describe(Address, '#new') do
     it "parses a address" do

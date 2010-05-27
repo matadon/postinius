@@ -1,4 +1,4 @@
-module Postal
+module Postinius
     class MultipartBuilder
 	#
 	# Creates the builder, and executes the supplied block in the

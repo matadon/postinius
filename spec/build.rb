@@ -1,5 +1,5 @@
-require 'postal'
-require 'postal/message'
+require 'postinius'
+require 'postinius/message'
 require 'digest/md5'
 
 # Set us up to use Unicode.
@@ -7,7 +7,7 @@ require 'jcode'
 $KCODE = 'u'
 
 # Make referring to Mail objects easier.
-include Postal
+include Postinius
 
 describe('Builder') do
     it 'builds a new simple message' do

@@ -1,7 +1,7 @@
-require 'postal/message/builder/multipart'
-require 'postal/message/builder/body_part'
+require 'postinius/message/builder/multipart'
+require 'postinius/message/builder/body_part'
 
-module Postal
+module Postinius
     class MimeMessageAlso < javax.mail.internet.MimeMessage
         #
 	# Apparently, the shitheads that wrote JavaMail weren't

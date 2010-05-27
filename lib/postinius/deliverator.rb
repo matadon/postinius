@@ -1,6 +1,6 @@
 require 'open3'
 
-module Postal
+module Postinius
     class Deliverator
 	def self.mailbox
 	    Thread.current[:mailbox] ||= Array.new

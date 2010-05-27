@@ -1,4 +1,4 @@
-module Postal
+module Postinius
     class MimeType
 	include_class javax.mail.internet.ContentType
 

@@ -1,13 +1,13 @@
 # We're only testing Address functionality.
-require 'postal'
-require 'postal/mime_type'
+require 'postinius'
+require 'postinius/mime_type'
 
 # Set us up to use Unicode.
 require 'jcode'
 $KCODE = 'u'
 
 # Make referring to Mail objects easier.
-include Postal
+include Postinius
 
 describe('MimeType') do
     it "deals with empty types" do

@@ -1,6 +1,6 @@
-require 'postal/mime_type'
+require 'postinius/mime_type'
 
-module Postal
+module Postinius
     class BodyPart
 	include_class javax.mail.internet.MimeBodyPart
 	include_class java.io.ByteArrayOutputStream

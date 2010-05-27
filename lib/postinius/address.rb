@@ -1,4 +1,4 @@
-module Postal
+module Postinius
     class Address
 	include_class javax.mail.internet.InternetAddress
 
