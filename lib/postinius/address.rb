@@ -12,15 +12,17 @@ module Postinius
 	    return(self.new(address))
 	end
 
-	def initialize(email = nil)
-	    if(email.is_a?(javax.mail.internet.InternetAddress))
-	        @address = email
-	    elsif(email.is_a?(self.class))
-	        @address = email.to_java
-	    elsif(email.nil? or email.empty?)
+	def initialize(address = nil)
+	    if(address.is_a?(javax.mail.internet.InternetAddress))
+	        @address = address
+	    elsif(address.is_a?(self.class))
+	        @address = address.to_java
+	    elsif(address.nil? or address.empty?)
 		@address = InternetAddress.new
 	    else
-		@address = InternetAddress.new(email) 
+		@address = InternetAddress.new(address) 
+	        return unless (address =~ /\s+\</)
+		self.name = address.sub(/\s+\<.*$/, '')
 	    end
 	end
 

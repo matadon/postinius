@@ -34,4 +34,14 @@ describe('Message') do
 	message.text.to_s.should =~ /text/
 	message.html.to_s.should =~ /HTML/
     end
+
+    it "handles foreign characters in the from address" do
+	message = Message.new do
+	    from "ドン・ワービ <don@madwombat.com>"
+	    to "root@madwombat.com"
+	    subject "こんにちは火星！"
+	    text "先に送信したマニュアルでロボット探査車" \
+	        + "スピリットが直れるようになると思います。"
+	end
+    end
 end
